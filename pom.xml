@@ -7,6 +7,11 @@
     <groupId>ogorek.wojciech</groupId>
     <artifactId>Car_Management_System2</artifactId>
     <version>${revision}</version>
+    <modules>
+        <module>persistence</module>
+        <module>service</module>
+        <module>ui</module>
+    </modules>
 
     <packaging>pom</packaging>
 
