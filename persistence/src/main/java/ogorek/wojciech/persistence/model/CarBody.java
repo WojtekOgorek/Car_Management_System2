@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import ogorek.wojciech.persistence.enums.CarBodyColor;
 import ogorek.wojciech.persistence.enums.CarBodyType;
 
-
 import java.util.List;
 
 @Data

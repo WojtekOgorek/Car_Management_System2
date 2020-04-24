@@ -11,7 +11,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Optional;
 
-public class JsonConverter<T> {
+public abstract class JsonConverter<T> {
 
     private final String jsonFilename;
 
