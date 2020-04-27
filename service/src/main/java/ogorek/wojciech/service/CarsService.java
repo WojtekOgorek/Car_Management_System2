@@ -1,13 +1,19 @@
 package ogorek.wojciech.service;
 
 import ogorek.wojciech.persistence.converter.CarsConverter;
+import ogorek.wojciech.persistence.exception.AppException;
 import ogorek.wojciech.persistence.exception.JsonException;
 import ogorek.wojciech.persistence.model.Car;
 import ogorek.wojciech.persistence.validator.impl.CarValidator;
+import ogorek.wojciech.service.enums.SortItem;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CarsService {
 
@@ -41,6 +47,31 @@ public class CarsService {
                         }))
                 .collect(Collectors.toSet());
 
-
     }
+
+    //method 1. Returns car collection sorted in a way passed as an argument.
+    //It can be sorted by: number of components, engine power, wheel size. Sort can be
+    //ascending or descending.
+
+    public List<Car> sort(SortItem sortItem, boolean descending){
+        if(sortItem == null){
+            throw new AppException("sort item object is null");
+        }
+
+        Stream<Car> carsStream = switch (sortItem){
+            case COMPONENTS -> cars.stream().sorted(Comparator.comparing(components -> components.getCarbody().getComponents().size()));
+            case POWER -> cars.stream().sorted(Comparator.comparing(power -> power.getEngine().getPower()));
+            case SIZE -> cars.stream().sorted(Comparator.comparing(wheel -> wheel.getWheel().getSize()));
+        };
+        List<Car> sortedCars = carsStream.collect(Collectors.toList());
+        if(descending){
+            Collections.reverse(sortedCars);
+        }
+        return sortedCars;
+    }
+
+
+
+
+
 }
