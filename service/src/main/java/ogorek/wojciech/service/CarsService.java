@@ -1,19 +1,21 @@
 package ogorek.wojciech.service;
 
 import ogorek.wojciech.persistence.converter.CarsConverter;
+import ogorek.wojciech.persistence.data.Statistic;
+import ogorek.wojciech.persistence.data.Statistics;
 import ogorek.wojciech.persistence.enums.CarBodyType;
 import ogorek.wojciech.persistence.enums.EngineType;
 import ogorek.wojciech.persistence.exception.AppException;
 import ogorek.wojciech.persistence.exception.JsonException;
 import ogorek.wojciech.persistence.model.Car;
 import ogorek.wojciech.persistence.validator.impl.CarValidator;
+import ogorek.wojciech.service.enums.PickStatistic;
 import ogorek.wojciech.service.enums.SortItem;
+import org.eclipse.collections.impl.collector.BigDecimalSummaryStatistics;
+import org.eclipse.collections.impl.collector.Collectors2;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -124,6 +126,57 @@ public class CarsService {
 
         List<Car> pickedCars = carsStream.collect(Collectors.toList());
         return pickedCars;
+    }
+
+    //method 4. Return statistics data for value that is passed as the method's argument
+    //It can be: price, mileage, engine power. Statistics must includes min, max and avg values.
+
+    public Statistics.StatisticsBuilder summarizeMileagePowerAndPrice(PickStatistic pickStatistic) {
+        if (pickStatistic == null) {
+            throw new AppException("pick statistic is null");
+        }
+
+        DoubleSummaryStatistics mileageStatistics = cars.stream().collect(Collectors.summarizingDouble(Car::getMileage));
+        DoubleSummaryStatistics powerStatistics = cars.stream().collect(Collectors.summarizingDouble(c -> c.getEngine().getPower()));
+        BigDecimalSummaryStatistics priceStatistics = cars.stream().collect(Collectors2.summarizingBigDecimal(Car::getPrice));
+
+
+        Statistic<Double> mileageStatistic = Statistic.<Double>builder()
+                .min(mileageStatistics.getMin())
+                .max(mileageStatistics.getMax())
+                .avg(mileageStatistics.getAverage())
+                .build();
+
+        Statistic<Double> powerStatistic = Statistic.<Double>builder()
+                .min(powerStatistics.getMin())
+                .max(powerStatistics.getMax())
+                .avg(powerStatistics.getAverage())
+                .build();
+
+        Statistic<BigDecimal> priceStatistic = Statistic.<BigDecimal>builder()
+                .min(priceStatistics.getMin())
+                .max(priceStatistics.getMax())
+                .avg(priceStatistics.getAverage())
+                .build();
+
+
+        switch (pickStatistic) {
+            case MILEAGE -> {
+                return Statistics.builder().mileageStatistics(mileageStatistic);
+            }
+            case POWER -> {
+                return Statistics.builder().powerStatistics(powerStatistic);
+            }
+            case PRICE -> {
+                return Statistics.builder().priceStatistics(priceStatistic);
+            }
+            default -> {
+                return Statistics.builder().mileageStatistics(mileageStatistic)
+                        .powerStatistics(powerStatistic).priceStatistics(priceStatistic);
+            }
+        }
+
+
     }
 
 
