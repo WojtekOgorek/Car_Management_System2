@@ -5,6 +5,7 @@ import ogorek.wojciech.persistence.data.Statistic;
 import ogorek.wojciech.persistence.data.Statistics;
 import ogorek.wojciech.persistence.enums.CarBodyType;
 import ogorek.wojciech.persistence.enums.EngineType;
+import ogorek.wojciech.persistence.enums.TyreType;
 import ogorek.wojciech.persistence.exception.AppException;
 import ogorek.wojciech.persistence.exception.JsonException;
 import ogorek.wojciech.persistence.model.Car;
@@ -17,6 +18,7 @@ import org.eclipse.collections.impl.collector.Collectors2;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -175,9 +177,34 @@ public class CarsService {
                         .powerStatistics(powerStatistic).priceStatistics(priceStatistic);
             }
         }
-
-
     }
+        //method 5. Return Map where key is Car object and value is number of km that car has done
+        //Pairs must be sorted descending by the value;
+
+        public Map<Car, Integer> carsMileageRecord() {
+
+            return cars
+                    .stream()
+                    .collect(Collectors.toMap(Function.identity(), Car::getMileage))
+                    .entrySet().stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::max, LinkedHashMap::new));
+
+        }
+
+        //method 6. Returns map where key is tyre type and value list of cars with those type of tyres
+        //Map is sorted descending by number of elements in collection
+
+        public Map<TyreType, List<Car>> listOfCarsWithSpecyficTyres() {
+
+        return cars
+                .stream()
+                .collect(Collectors.groupingBy(tyre -> tyre.getWheel().getType()))
+                .entrySet()
+                .stream()
+                .sorted(Comparator.comparing(e -> e.getValue().size()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        }
 
 
 }
