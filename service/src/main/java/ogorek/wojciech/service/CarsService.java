@@ -206,5 +206,19 @@ public class CarsService {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
 
+        //method 7. Returns car collection that contains all components that are passed as a collection
+        // in method's signature.
+
+        public List<Car> carsWithAllPickedComponents(List<String> carComponents){
+            if(carComponents == null){
+                throw new AppException("car components object is null" + carComponents);
+            }
+
+            return cars
+                    .stream()
+                    .filter(car -> car.getCarbody().getComponents().contains(carComponents))
+                    .collect(Collectors.toList());
+        }
+
 
 }
