@@ -110,20 +110,18 @@
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>enforce-ev-requirements</id>
+                        <id>enforce-env-requirements</id>
                         <goals>
-                            <goal>
-                                enforce
-                            </goal>
+                            <goal>enforce</goal>
                         </goals>
                         <configuration>
                             <rules>
-                                <requiredJavaVersion>
+                                <requireJavaVersion>
                                     <version>[11,)</version>
-                                </requiredJavaVersion>
-                                <requiredMavenVersion>
+                                </requireJavaVersion>
+                                <requireMavenVersion>
                                     <version>[3.5,)</version>
-                                </requiredMavenVersion>
+                                </requireMavenVersion>
                             </rules>
                         </configuration>
                     </execution>
@@ -134,7 +132,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
                 <configuration>
-                    <flattenMode>flatten</flattenMode>
+                    <flattenMode>bom</flattenMode>
                 </configuration>
                 <executions>
                     <!-- enable flattening -->
@@ -147,18 +145,16 @@
                     </execution>
                     <!-- ensure proper cleanup -->
                     <execution>
-                    <id>flatten.clean</id>
-                    <phase>clean</phase>
-                    <goals>
-                        <goal>clean</goal>
-                    </goals>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
-
 
 
 </project>
