@@ -1,23 +1,23 @@
 {
-  "model": "Ferarri",
-  "price": 10000000,
+  "model": "FERRARI",
+  "price": "10000000",
   "mileage": 100,
   "engine": {
     "type": "GASOLINE",
     "power": 100.0
   },
-  "carbody": {
+  "carBody": {
     "color": "SILVER",
     "type": "SEDAN",
     "components": [
-      "abs",
-      "ebd",
-      "ac",
-      "dvd"
+      "ABS",
+      "EBD",
+      "AC",
+      "DVD"
     ]
   },
   "wheel": {
-    "model": "Michellin",
+    "model": "MICHELLIN",
     "size": 16,
     "type": "WINTER"
   }

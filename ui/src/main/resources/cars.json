@@ -1,70 +1,70 @@
 [
   {
-    "model": "Ferarri",
+    "model": "FERRARI",
     "price": 10000000,
     "mileage": 100,
     "engine": {
       "type": "GASOLINE",
       "power": 100.0
     },
-    "carbody": {
+    "carBody": {
       "color": "SILVER",
       "type": "SEDAN",
       "components": [
-        "abs",
-        "ebd",
-        "ac",
-        "dvd"
+        "ABS",
+        "EBD",
+        "AC",
+        "DVD"
       ]
     },
     "wheel": {
-      "model": "Michellin",
+      "model": "MICHELLIN",
       "size": 16,
       "type": "WINTER"
     }
   },
   {
-    "model": "Lambo",
+    "model": "LAMBO",
     "price": 1550000,
     "mileage": 150,
     "engine": {
       "type": "LPG",
       "power": 50.0
     },
-    "carbody": {
+    "carBody": {
       "color": "BLUE",
       "type": "HATCHBACK",
       "components": [
-        "abs",
-        "ac"
+        "ABS",
+        "AC"
       ]
     },
     "wheel": {
-      "model": "Pirrelli",
+      "model": "PIRRELLI",
       "size": 18,
       "type": "SUMMER"
     }
   },
   {
-    "model": "Porsche",
+    "model": "PORSCHE",
     "price": 500000,
     "mileage": 300,
     "engine": {
       "type": "DIESEL",
       "power": 150.0
     },
-    "carbody": {
+    "carBody": {
       "color": "SILVER",
       "type": "SEDAN",
       "components": [
-        "abs",
-        "ebd",
-        "ac",
-        "dvd"
+        "ABS",
+        "EBD",
+        "AC",
+        "DVD"
       ]
     },
     "wheel": {
-      "model": "Pirrelli",
+      "model": "PIRRELLI",
       "size": 18,
       "type": "SUMMER"
     }

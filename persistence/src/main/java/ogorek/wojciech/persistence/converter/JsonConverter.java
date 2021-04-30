@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ogorek.wojciech.persistence.exception.AppException;
 
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.ParameterizedType;

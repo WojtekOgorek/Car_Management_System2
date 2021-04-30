@@ -1,6 +1,7 @@
 package ogorek.wojciech.persistence.converter;
 
-import ogorek.wojciech.persistence.model.Car;
+
+import ogorek.wojciech.persistence.domain.car.Car;
 
 import java.util.Set;
 
