@@ -6,7 +6,7 @@ encapsulated from rest of the application.
 
 ## Installation
 
-Use maven -> [link](https://maven.apache.org/download.cgi) <- to install car management system 2.
+Use maven -> [link](https://maven.apache.org/download.cgi) <- to install car management system 2. You need to add file paths to json paths to the filename variables.
 
 ```bash
 #main folder
