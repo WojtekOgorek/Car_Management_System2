@@ -6,16 +6,17 @@ encapsulated from rest of the application.
 
 ## Installation
 
-Use maven -> [link](https://maven.apache.org/download.cgi) <- to install car management system 1.
+Use maven -> [link](https://maven.apache.org/download.cgi) <- to install car management system 2.
 
 ```bash
+#main folder
 mvn clean install
 #go to ui folder 
 cd ui
 #go to target folder
 cd target
 #start app
-java -jar ui.jar
+java -jar --enable-preview ui.jar
 ```
 
 ## Usage
