@@ -24,89 +24,52 @@ java -jar --enable-preview ui.jar
 ```java
 /*
  *
- *    ----------  CAR DOMAIN MODEL ----------
+ *    ----------  APP MENU ----------
  *
  */
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@EqualsAndHashCode
-@ToString
-public class Car {
-    String model;
-    BigDecimal price;
-    double mileage;
-    Engine engine;
-    CarBody carBody;
-    Wheel wheel;
+public class MenuService {
 
-    // -------- access methods within car model --------
-    public boolean hasCarBodyType(CarBodyType carBodyType) {
-        return carBody.hasType(carBodyType);
-    }
+    private final CarsService carsService;
 
-    public boolean carHasEngineType(EngineType engineType) {
-        return engine.hasEngineType(engineType);
-    }
-
-    public boolean hasPriceInRange(BigDecimal priceFrom, BigDecimal priceTo) {
-        return price.compareTo(priceFrom) >= 0 && price.compareTo(priceTo) <= 0;
-    }
-
-    public boolean hasCarComponents(List<String> components) {
-        return carBody.compareComponents(components);
-    }
-}
-
-/*
- *
- *    ----------  CAR FUNCTOR INTERFACE  ----------
- *
- */
-
-public interface CarUtils {
-    Comparator<Car> compareByEnginePower = (car1, car2) -> car1.engine.compareByPower(car2.engine);
-    Comparator<Car> compareByWheelSize = (car1, car2) -> car1.wheel.compareBySize(car2.wheel);
-    Comparator<Car> compareByComponentsSize = (car1, car2) -> car1.carBody.compareByComponentsSize(car2.carBody);
-
-    Function<Car, TyreType> toTyreType = car -> WheelUtils.toTyreType.apply(car.wheel);
-    Function<Car, String> toModel = car -> car.model;
-    org.eclipse.collections.api.block.function.Function<Car, BigDecimal> toPrice = car -> car.price;
-
-
-    Function<Car, Double> toMileage = car -> car.mileage;
-    ToDoubleFunction<Car> toMileageStats = car -> car.mileage;
-
-    ToDoubleFunction<Car> toPowerStats = car -> EngineUtils.toPower.apply(car.engine);
-
-}
-
-/*
- *
- *    ----------  CAR SERVICE EXAMPLE  ----------
- *
- */
-public class CarsService {
-    public List<Car> sort(SortItem sortItem, boolean descending) {
-        if (sortItem == null) {
-            throw new AppException("sort item object is null");
+    public void mainMenu() {
+        while (true) {
+            try {
+                int option = chooseOptionFromMainMenu();
+                switch (option) {
+                    case 1 -> option1();
+                    case 2 -> option2();
+                    case 3 -> option3();
+                    case 4 -> option4();
+                    case 5 -> option5();
+                    case 6 -> option6();
+                    case 7 -> option7();
+                    case 8 -> option8();
+                    case 9 -> {
+                        UserDataService.close();
+                        System.out.println("Have a nice day !");
+                        return;
+                    }
+                    default -> System.out.println("\nWrong option number\n");
+                }
+            } catch (AppException e) {
+                System.out.println(e.getMessage());
+            }
         }
-
-        Stream<Car> carsStream = switch (sortItem) {
-            case COMPONENTS_SIZE -> cars.stream().sorted(CarUtils.compareByComponentsSize);
-            case ENGINE_POWER -> cars.stream().sorted(CarUtils.compareByEnginePower);
-            default -> cars.stream().sorted(CarUtils.compareByWheelSize);
-        };
-        
-        List<Car> sortedCars = carsStream.collect(Collectors.toList());
-        if (descending) {
-            Collections.reverse(sortedCars);
-        }
-        return sortedCars;
     }
 
-}
+    private int chooseOptionFromMainMenu() {
+        System.out.println("1. Show all cars");
+        System.out.println("2. Sort cars");
+        System.out.println("3. Get cars specified body type and price between");
+        System.out.println("4. Get list of cars grouped by engine type");
+        System.out.println("5. Get price and mileage or engine power statistics of cars");
+        System.out.println("6. Get cars mileage record");
+        System.out.println("7. Get cars with specified tyre types");
+        System.out.println("8. Get cars with all specified components");
+        System.out.println("9. End of app");
+        return UserDataService.getInt("Choose option:");
+    }
 
 
 
